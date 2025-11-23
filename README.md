@@ -57,8 +57,12 @@ mvn spring-boot:run
 
 ### Testes Unitários
 
+Para executar todos de uma vez:
 ``` bash
 mvn test
+```
+Para executar unitarios:
+``` bash
 mvn test -Dtest=BaseServiceTest
 mvn test -Dtest=PedidoServiceTest
 mvn test -Dtest=ItemPedidoServiceTest
