@@ -32,4 +32,8 @@ public class Pedido extends BaseEntity{
     @JsonIgnore
     private List<ItemPedido> itens = new ArrayList<>();
 
+    private BigDecimal valorTotalItens;
+
+    private BigDecimal valorFinal;
+
 }
