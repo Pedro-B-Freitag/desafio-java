@@ -54,5 +54,17 @@ public class ItemPedidoRepositoryImpl extends BaseRepositoryImpl<ItemPedido, UUI
                 .fetchFirst() != null;
     }
 
+    @Override
+    public BigDecimal calcularValorTotalItens(UUID idPedido) {
+        BigDecimal resultado = jpaQueryFactory
+                .select(itemPedido.produto.preco.multiply(itemPedido.quantidade).sum())
+                .from(itemPedido)
+                .where(
+                        itemPedido.pedido.id.eq(idPedido)
+                                .and(itemPedido.ativo.isTrue())
+                )
+                .fetchFirst();
+        return resultado != null ? resultado : BigDecimal.ZERO;
+    }
 
 }
