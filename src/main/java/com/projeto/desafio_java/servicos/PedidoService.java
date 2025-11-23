@@ -28,32 +28,30 @@ public class PedidoService extends BaseService<Pedido, UUID, PedidoDto> {
         this.itemPedidoRepository = itemPedidoRepository;
     }
 
-    public void atualizarDescontos(Pedido pedido){
-        if(pedido.getPercentualDesconto().compareTo(BigDecimal.ZERO) == 0){
-            pedido.setDescontoEfetivo(BigDecimal.ZERO);
-            pedidoRepository.save(pedido);
-            return;
-        }
-        aplicarDescontos(pedido.getId(), pedido.getPercentualDesconto());
-    }
-
     public Pedido aplicarDescontos(UUID id, BigDecimal porcentagem) {
         Pedido pedido = buscarPorId(id);
         if(pedido.getStatus() == StatusPedidoEnum.FECHADO){
             throw new BadRequestException("Não é possível aplicar descontos a pedidos fechados!");
         }
         pedido.setPercentualDesconto(porcentagem);
-        return calcularDescontos(pedido);
+        return calcularTotais(pedido);
     }
 
-    private Pedido calcularDescontos(Pedido pedido) {
+    private void calcularDescontos(Pedido pedido) {
         BigDecimal valorBrutoProdutos = itemPedidoRepository.calcularValorTotalProdutosNoPedido(pedido.getId());
         pedido.setDescontoEfetivo(BigDecimal.ZERO);
 
-        if(valorBrutoProdutos.compareTo(BigDecimal.ZERO) > 0){
+        if(valorBrutoProdutos.compareTo(BigDecimal.ZERO) > 0 && pedido.getPercentualDesconto() != null){
             BigDecimal valorDesconto = valorBrutoProdutos.multiply(pedido.getPercentualDesconto()).divide(BigDecimal.valueOf(100), RoundingMode.HALF_UP);
             pedido.setDescontoEfetivo(valorDesconto);
         }
+        return pedidoRepository.save(pedido);
+    }
+
+    public Pedido calcularTotais(Pedido pedido){
+        calcularDescontos(pedido);
+        pedido.setValorTotalItens(itemPedidoRepository.calcularValorTotalItens(pedido.getId()));
+        pedido.setValorFinal(pedido.getValorTotalItens().subtract(pedido.getDescontoEfetivo()));
         return pedidoRepository.save(pedido);
     }
 
