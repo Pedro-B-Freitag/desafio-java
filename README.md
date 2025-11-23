@@ -2,8 +2,8 @@
 
 ## Pré-requisitos
 
--   Java 17 ou superior\
--   Maven 3.6 ou superior\
+-   Java 17 ou superior
+-   Maven 3.6 ou superior
 -   PostgreSQL 14 ou superior
 
 ## Configuração da Aplicação
@@ -40,7 +40,7 @@ spring.profiles.active=test
 ``` bash
 mvn clean compile
 ```
-
+<p>A compilação deve gerar as classes do queryDSL, se isso não acontecer, verifique se o pom.xml foi clonado corretamente e execute o comando novamente</p>
 ### Executar aplicação:
 
 ``` bash
@@ -49,8 +49,8 @@ mvn spring-boot:run
 
 ### 2. Acessar a Aplicação
 
--   API: http://localhost:8080\
--   Swagger UI: http://localhost:8080/swagger-ui.html\
+-   API: http://localhost:8080
+-   Swagger UI: http://localhost:8080/swagger-ui.html
 -   Documentação OpenAPI: http://localhost:8080/api-docs
 
 ## Execução dos Testes
@@ -127,6 +127,30 @@ mvn test -Dtest=ProdutoServicoServiceTest
 }
 ```
 
+### Listar Pedidos
+
+``` http
+GET /pedidos
+```
+
+### Buscar Pedido por ID
+
+``` http
+GET /pedidos/{id}
+```
+
+### Atualizar Pedido
+
+``` http
+PUT /pedidos/{id}
+```
+
+### Deletar Pedido
+
+``` http
+DELETE /pedidos/{id}
+```
+
 ### Aplicar Desconto
 
 ``` json
@@ -135,7 +159,25 @@ mvn test -Dtest=ProdutoServicoServiceTest
 }
 ```
 
+### Fechar pedido
+
+``` http
+POST /pedidos/{id}/fechar
+````
+
 # Itens do Pedido
+
+### Listar todos os Itens de todos os Pedidos
+
+``` http
+GET /itensPedidos
+```
+
+### Buscar Item do Pedido por ID
+
+``` http
+GET /itensPedidos/{id}
+```
 
 ### Adicionar Item ao Pedido
 
@@ -157,5 +199,4 @@ mvn test -Dtest=ProdutoServicoServiceTest
 }
 ```
 
-A aplicação estará disponível em
-http://localhost:8080/swagger-ui/index.html
+A aplicação estará disponível em: http://localhost:8080/swagger-ui/index.html ou no postman acessando os endpoints da aplicação conforme mencionado acima
