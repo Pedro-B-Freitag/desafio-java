@@ -9,7 +9,10 @@ import java.util.UUID;
 
 @Repository
 public interface ItemPedidoRepository extends BaseRepository<ItemPedido, UUID> {
+    
     public BigDecimal calcularValorTotalProdutosNoPedido(UUID idPedido);
     public List<ItemPedido> buscarTodosPeloPedido(UUID idPedido);
     public boolean possuiPedido(UUID idProduto);
+    public BigDecimal calcularValorTotalItens(UUID idPedido);
+
 }
