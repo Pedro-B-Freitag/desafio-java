@@ -57,6 +57,8 @@ mvn spring-boot:run
 
 ### Testes Unitários
 
+<p>Os testes dão cobertura aos services da aplicação, pois são neles em que tratamos as requisições e os dados que serão inseridos/ buscados do banco de dados e os resultados mostrados nos endpoints.</p>
+
 Para executar todos de uma vez:
 ``` bash
 mvn test
