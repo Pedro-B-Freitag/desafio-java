@@ -45,7 +45,7 @@ public class PedidoService extends BaseService<Pedido, UUID, PedidoDto> {
             BigDecimal valorDesconto = valorBrutoProdutos.multiply(pedido.getPercentualDesconto()).divide(BigDecimal.valueOf(100), RoundingMode.HALF_UP);
             pedido.setDescontoEfetivo(valorDesconto);
         }
-        return pedidoRepository.save(pedido);
+        pedidoRepository.save(pedido);
     }
 
     public Pedido calcularTotais(Pedido pedido){
