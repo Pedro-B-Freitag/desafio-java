@@ -22,20 +22,20 @@ public class ItemPedidoController extends BaseController<ItemPedido, UUID, ItemP
     @PostMapping
     public ItemPedido criar(@RequestBody ItemPedidoDto dto) {
         ItemPedido itemPedido = servico.criar(dto);
-        pedidoService.atualizarDescontos(itemPedido.getPedido());
+        pedidoService.calcularTotais(itemPedido.getPedido());
         return itemPedido;
     }
 
     @PutMapping("/{id}")
     public ItemPedido atualizar(@PathVariable UUID id, @RequestBody ItemPedidoDto dto) {
         ItemPedido itemPedido = servico.salvar(dto, id);
-        pedidoService.atualizarDescontos(itemPedido.getPedido());
+        pedidoService.calcularTotais(itemPedido.getPedido());
         return itemPedido;
     }
 
     @DeleteMapping("/{id}")
     public void deletar(@PathVariable UUID id) {
         ItemPedido itemPedido = servico.deletar(id);
-        pedidoService.atualizarDescontos(itemPedido.getPedido());
+        pedidoService.calcularTotais(itemPedido.getPedido());
     }
 }
